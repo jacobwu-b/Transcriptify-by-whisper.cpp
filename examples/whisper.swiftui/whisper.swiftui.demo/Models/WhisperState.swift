@@ -19,7 +19,7 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
     }
     
     private var sampleUrl: URL? {
-        Bundle.main.url(forResource: "jfk", withExtension: "wav", subdirectory: "samples")
+        Bundle.main.url(forResource: "samples_jfk", withExtension: "wav", subdirectory: "samples")
     }
     
     private enum LoadError: Error {
@@ -38,12 +38,12 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
     }
     
     private func loadModel() throws {
-        messageLog += "Loading model...\n"
+        messageLog += "Loading model..."
         if let modelUrl {
             whisperContext = try WhisperContext.createContext(path: modelUrl.path())
-            messageLog += "Loaded model \(modelUrl.lastPathComponent)\n"
+            messageLog += "\(modelUrl.lastPathComponent) loaded successfully.\n"
         } else {
-            messageLog += "Could not locate model\n"
+            messageLog += "Failed\n"
         }
     }
     
@@ -51,12 +51,13 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
         if let sampleUrl {
             await transcribeAudio(sampleUrl)
         } else {
-            messageLog += "Could not locate sample\n"
+            messageLog += "Sample URL retrieval failed.\n"
         }
     }
     
     private func transcribeAudio(_ url: URL) async {
         if (!canTranscribe) {
+            messageLog += "Transcription unavailable.\n"
             return
         }
         guard let whisperContext else {
@@ -65,15 +66,15 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
         
         do {
             canTranscribe = false
-            messageLog += "Reading wave samples...\n"
+            messageLog += "Extracting audio samples from \(url.lastPathComponent)..."
             let data = try readAudioSamples(url)
-            messageLog += "Transcribing data...\n"
+            messageLog += "Initiating transcription...\n"
             await whisperContext.fullTranscribe(samples: data)
             let text = await whisperContext.getTranscription()
-            messageLog += "Done: \(text)\n"
+            messageLog += "Transcription completed:\n\(text)\n"
         } catch {
             print(error.localizedDescription)
-            messageLog += "\(error.localizedDescription)\n"
+            messageLog += "Transcription error: \(error.localizedDescription)\n"
         }
         
         canTranscribe = true

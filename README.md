@@ -1,5 +1,6 @@
 # Transcriptify based on whisper.cpp
-To load XCode project, open XCode and Open this file: Transcriptify-by-whisper.cpp/examples/whisper.objc
+To load XCode project, open XCode and Open this file: Transcriptify-by-whisper.cpp/examples/whisper.objc/whisper.objc.xcodeproj
+Alternative using SwiftUI: Open XCode and Open this file: Transcriptify-by-whisper.cpp/examples/whisper.swiftui/whisper.swiftui.xcodeproj
 
 # Readme from whisper.cpp
 ![whisper.cpp](https://user-images.githubusercontent.com/1991296/235238348-05d0f6a4-da44-4900-a1de-d0707e75b763.jpeg)

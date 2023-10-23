@@ -8,7 +8,7 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 HStack {
-                    Button("Transcribe", action: {
+                    Button("Transcribe Sample Audio File", action: {
                         Task {
                             await whisperState.transcribeSample()
                         }
@@ -26,7 +26,7 @@ struct ContentView: View {
                 }
                 
                 ScrollView {
-                    Text(verbatim: whisperState.messageLog)
+                    Text(verbatim: whisperState.transcript)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }

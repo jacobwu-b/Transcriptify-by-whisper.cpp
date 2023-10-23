@@ -6,6 +6,7 @@ import AVFoundation
 class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
     @Published var isModelLoaded = false
     @Published var messageLog = ""
+    @Published var transcript = ""
     @Published var canTranscribe = false
     @Published var isRecording = false
     
@@ -66,11 +67,13 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
         
         do {
             canTranscribe = false
+            transcript = "Transcribing..."
             messageLog += "Extracting audio samples from \(url.lastPathComponent)..."
             let data = try readAudioSamples(url)
             messageLog += "Initiating transcription...\n"
             await whisperContext.fullTranscribe(samples: data)
             let text = await whisperContext.getTranscription()
+            transcript = text
             messageLog += "Transcription completed:\n\(text)\n"
         } catch {
             print(error.localizedDescription)

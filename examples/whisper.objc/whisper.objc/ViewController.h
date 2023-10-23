@@ -11,7 +11,7 @@
 #import <AudioToolbox/AudioQueue.h>
 
 #define NUM_BUFFERS 3
-#define MAX_AUDIO_SEC 30
+#define MAX_AUDIO_SEC 60 * 180 // Support lectures up to three hours
 #define SAMPLE_RATE 16000
 
 struct whisper_context;

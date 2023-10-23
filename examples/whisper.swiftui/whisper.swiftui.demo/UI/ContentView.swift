@@ -30,7 +30,7 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
-            .navigationTitle("Whisper SwiftUI Demo")
+            .navigationTitle("Transcriptify")
             .padding()
         }
     }

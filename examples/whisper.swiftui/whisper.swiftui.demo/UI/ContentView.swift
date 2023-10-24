@@ -4,6 +4,11 @@ import AVFoundation
 struct ContentView: View {
     @StateObject var whisperState = WhisperState()
     
+    // Computed property to negate isRecording
+    private var cannotTranscribe: Bool {
+        return !whisperState.canTranscribe
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -25,14 +30,29 @@ struct ContentView: View {
                     .disabled(!whisperState.canTranscribe)
 //                }
                 
-                ScrollView {
-                    Text(verbatim: whisperState.transcript)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
+//                ScrollView {
+//                    Text(verbatim: whisperState.transcript)
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                }
+                
+                NavigationLink(destination: TranscriptView(whisperState: whisperState),
+                                               isActive: Binding(get: { self.cannotTranscribe }, set: { _ in })) {
+                                    EmptyView()
+                                }
             }
             .navigationTitle("Transcriptify")
             .padding()
         }
+    }
+}
+
+struct TranscriptView: View {
+    @ObservedObject var whisperState: WhisperState
+    
+    var body: some View {
+        Text(whisperState.transcript)
+            .padding()
+            .navigationTitle("Transcript")
     }
 }
 

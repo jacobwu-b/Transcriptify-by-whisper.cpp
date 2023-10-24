@@ -19,14 +19,28 @@ struct ContentView: View {
                                 }
                                 .pickerStyle(SegmentedPickerStyle())
                 
-//                HStack {
-//                    Button("Transcribe Sample Audio File", action: {
-//                        Task {
-//                            await whisperState.transcribeSample()
-//                        }
-//                    })
-//                    .buttonStyle(.bordered)
-//                    .disabled(!whisperState.canTranscribe)
+                HStack {
+                    Button("Transcribe Sample Audio File", action: {
+                        Task {
+                            await whisperState.transcribeSample()
+                        }
+                    })
+                    .buttonStyle(.bordered)
+                    .padding()
+                    .font(.largeTitle)
+                    .disabled(!whisperState.canTranscribe)
+                    
+                    Spacer()
+                    
+                    Button("Get Sample Transcript", action: {
+                            Task {
+                                await whisperState.fillSampleTranscript()
+                            }
+                        })
+                        .buttonStyle(.bordered)
+                        .padding()
+                        .font(.largeTitle)
+                        .disabled(!whisperState.canTranscribe)
                 
                     Spacer()
                 
@@ -39,12 +53,7 @@ struct ContentView: View {
                     .padding()
                     .font(.largeTitle)
                     .disabled(!whisperState.canTranscribe)
-//                }
-                
-//                ScrollView {
-//                    Text(verbatim: whisperState.transcript)
-//                        .frame(maxWidth: .infinity, alignment: .leading)
-//                }
+                }
                 
                 Spacer()
                 
@@ -52,6 +61,7 @@ struct ContentView: View {
                                isActive: $whisperState.isTranscriptViewActive) {
                     Text("View Transcript")
                                 }
+                               .disabled(!whisperState.canTranscribe)
             }
             .navigationTitle("Transcriptify")
             .padding()

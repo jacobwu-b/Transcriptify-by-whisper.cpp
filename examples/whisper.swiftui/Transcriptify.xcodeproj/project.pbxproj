@@ -29,7 +29,7 @@
 		0AA751472953AC2E001EE061 /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = models; sourceTree = "<group>"; };
 		0AA7514B2953B569001EE061 /* RiffWaveUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiffWaveUtils.swift; sourceTree = "<group>"; };
 		0AA7514D2953D958001EE061 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
-		0AAC5D9729539CCF003032C3 /* whisper.swiftui.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = whisper.swiftui.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AAC5D9729539CCF003032C3 /* Transcriptify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transcriptify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AAC5D9A29539CCF003032C3 /* TranscriptifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptifyApp.swift; sourceTree = "<group>"; };
 		0AAC5D9C29539CCF003032C3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0AAC5D9E29539CD0003032C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		0AAC5D9829539CCF003032C3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0AAC5D9729539CCF003032C3 /* whisper.swiftui.app */,
+				0AAC5D9729539CCF003032C3 /* Transcriptify.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,9 +168,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0AAC5D9629539CCF003032C3 /* whisper.swiftui */ = {
+		0AAC5D9629539CCF003032C3 /* Transcriptify */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0AAC5DBC29539CD0003032C3 /* Build configuration list for PBXNativeTarget "whisper.swiftui" */;
+			buildConfigurationList = 0AAC5DBC29539CD0003032C3 /* Build configuration list for PBXNativeTarget "Transcriptify" */;
 			buildPhases = (
 				0AAC5D9329539CCF003032C3 /* Sources */,
 				0AAC5D9429539CCF003032C3 /* Frameworks */,
@@ -180,9 +180,9 @@
 			);
 			dependencies = (
 			);
-			name = whisper.swiftui;
+			name = Transcriptify;
 			productName = WhisperCppDemo;
-			productReference = 0AAC5D9729539CCF003032C3 /* whisper.swiftui.app */;
+			productReference = 0AAC5D9729539CCF003032C3 /* Transcriptify.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -201,7 +201,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0AAC5D9229539CCF003032C3 /* Build configuration list for PBXProject "whisper.swiftui" */;
+			buildConfigurationList = 0AAC5D9229539CCF003032C3 /* Build configuration list for PBXProject "Transcriptify" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -214,7 +214,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0AAC5D9629539CCF003032C3 /* whisper.swiftui */,
+				0AAC5D9629539CCF003032C3 /* Transcriptify */,
 			);
 		};
 /* End PBXProject section */
@@ -466,7 +466,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0AAC5D9229539CCF003032C3 /* Build configuration list for PBXProject "whisper.swiftui" */ = {
+		0AAC5D9229539CCF003032C3 /* Build configuration list for PBXProject "Transcriptify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0AAC5DBA29539CD0003032C3 /* Debug */,
@@ -475,7 +475,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0AAC5DBC29539CD0003032C3 /* Build configuration list for PBXNativeTarget "whisper.swiftui" */ = {
+		0AAC5DBC29539CD0003032C3 /* Build configuration list for PBXNativeTarget "Transcriptify" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0AAC5DBD29539CD0003032C3 /* Debug */,

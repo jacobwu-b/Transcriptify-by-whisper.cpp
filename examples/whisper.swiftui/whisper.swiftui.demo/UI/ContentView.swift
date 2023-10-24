@@ -7,14 +7,14 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                HStack {
-                    Button("Transcribe Sample Audio File", action: {
-                        Task {
-                            await whisperState.transcribeSample()
-                        }
-                    })
-                    .buttonStyle(.bordered)
-                    .disabled(!whisperState.canTranscribe)
+//                HStack {
+//                    Button("Transcribe Sample Audio File", action: {
+//                        Task {
+//                            await whisperState.transcribeSample()
+//                        }
+//                    })
+//                    .buttonStyle(.bordered)
+//                    .disabled(!whisperState.canTranscribe)
                     
                     Button(whisperState.isRecording ? "Stop recording" : "Start recording", action: {
                         Task {
@@ -23,7 +23,7 @@ struct ContentView: View {
                     })
                     .buttonStyle(.bordered)
                     .disabled(!whisperState.canTranscribe)
-                }
+//                }
                 
                 ScrollView {
                     Text(verbatim: whisperState.transcript)

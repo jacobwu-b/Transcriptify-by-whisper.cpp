@@ -12,6 +12,13 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                Picker("Model Size", selection: $whisperState.selectedModelSize) {
+                                    ForEach(ModelSize.allCases, id: \.self) { modelSize in
+                                        Text(modelSize.displayName).tag(modelSize)
+                                    }
+                                }
+                                .pickerStyle(SegmentedPickerStyle())
+                
 //                HStack {
 //                    Button("Transcribe Sample Audio File", action: {
 //                        Task {
@@ -20,13 +27,17 @@ struct ContentView: View {
 //                    })
 //                    .buttonStyle(.bordered)
 //                    .disabled(!whisperState.canTranscribe)
-                    
+                
+                    Spacer()
+                
                     Button(whisperState.isRecording ? "Stop recording" : "Start recording", action: {
                         Task {
                             await whisperState.toggleRecord()
                         }
                     })
                     .buttonStyle(.bordered)
+                    .padding()
+                    .font(.largeTitle)
                     .disabled(!whisperState.canTranscribe)
 //                }
                 
@@ -35,9 +46,11 @@ struct ContentView: View {
 //                        .frame(maxWidth: .infinity, alignment: .leading)
 //                }
                 
+                Spacer()
+                
                 NavigationLink(destination: TranscriptView(whisperState: whisperState),
-                                               isActive: Binding(get: { self.cannotTranscribe }, set: { _ in })) {
-                                    EmptyView()
+                               isActive: Binding(get: { self.cannotTranscribe }, set: { _ in })) {
+                    Text("View Transcript")
                                 }
             }
             .navigationTitle("Transcriptify")
@@ -51,6 +64,7 @@ struct TranscriptView: View {
     
     var body: some View {
         Text(whisperState.transcript)
+            .textSelection(.enabled)
             .padding()
             .navigationTitle("Transcript")
     }

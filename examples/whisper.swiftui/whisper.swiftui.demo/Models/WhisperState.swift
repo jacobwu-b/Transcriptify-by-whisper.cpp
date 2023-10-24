@@ -9,6 +9,7 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
     @Published var transcript = ""
     @Published var canTranscribe = false
     @Published var isRecording = false
+    @Published var selectedModelSize: ModelSize = .base
     
     private var whisperContext: WhisperContext?
     private let recorder = Recorder()
@@ -16,7 +17,7 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
     private var audioPlayer: AVAudioPlayer?
     
     private var modelUrl: URL? {
-        Bundle.main.url(forResource: "ggml-medium.en", withExtension: "bin", subdirectory: "models")
+        Bundle.main.url(forResource: selectedModelSize.rawValue, withExtension: "bin", subdirectory: "models")
     }
     
     private var sampleUrl: URL? {

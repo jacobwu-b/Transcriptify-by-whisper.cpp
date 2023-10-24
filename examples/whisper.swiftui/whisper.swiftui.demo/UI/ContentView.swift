@@ -1,5 +1,10 @@
 import SwiftUI
 import AVFoundation
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 struct ContentView: View {
     @StateObject var whisperState = WhisperState()
@@ -73,10 +78,42 @@ struct TranscriptView: View {
     @ObservedObject var whisperState: WhisperState
     
     var body: some View {
-        Text(whisperState.transcript)
-            .textSelection(.enabled)
-            .padding()
-            .navigationTitle("Transcript")
+//        Text(whisperState.transcript)
+//            .textSelection(.enabled)
+//            .padding()
+//            .navigationTitle("Transcript")
+        
+        ScrollView {
+            LazyVStack {
+                ForEach(0..<whisperState.chunks.count, id: \.self) { index in
+                                        Button(action: {
+                                            // Copy the selected chunk to the clipboard
+                                            self.copyToClipboard(text: whisperState.chunks[index])
+                                        }) {
+                                            Text("Part \(index + 1)")
+                                                .padding()
+                                                .background(Color.blue)
+                                                .foregroundColor(.white)
+                                                .cornerRadius(8)
+                                        }
+                                        .padding(.bottom, 10)
+                                    }
+                Text(whisperState.transcript)
+                    .textSelection(.enabled)
+                    .padding()
+                    .navigationTitle("Transcript")
+            }
+        }.navigationTitle("Transcript Chunks")
+    }
+    func copyToClipboard(text: String) {
+        #if os(macOS)
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(text, forType: .string)
+        #else
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = text
+        #endif
     }
 }
 

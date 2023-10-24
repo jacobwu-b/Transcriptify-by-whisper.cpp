@@ -7,10 +7,13 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
     @Published var isModelLoaded = false
     @Published var messageLog = ""
     @Published var transcript = ""
+    @Published var chunks: [String] = []
     @Published var canTranscribe = false
     @Published var isRecording = false
     @Published var isTranscriptViewActive = false
     @Published var selectedModelSize: ModelSize = .base
+    
+    let tokenLimit = 20000
     
     private var whisperContext: WhisperContext?
     private let recorder = Recorder()
@@ -77,6 +80,7 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
             await whisperContext.fullTranscribe(samples: data)
             let text = await whisperContext.getTranscription()
             transcript = text
+            updateChunks()
             messageLog += "Transcription completed:\n\(text)\n"
             isTranscriptViewActive = true
         } catch {
@@ -166,6 +170,53 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
     
     private func onDidFinishRecording() {
         isRecording = false
+    }
+    
+    private func updateChunks() {
+        let words = transcript.split(separator: " ")  // Tokenizing by splitting on spaces
+        var currentChunkTokens: [Substring] = []
+        var currentTokenCount = 0
+        var partIndex = 0
+        var totalParts = 1
+        
+        for word in words { // Pre-Process to compute `totalParts`
+            let newTokenCount = currentTokenCount + word.count + 1  // Adding 1 for the space
+            if newTokenCount <= tokenLimit {
+                currentTokenCount = newTokenCount
+            } else {
+                totalParts += 1  // Increment totalParts when tokenLimit is reached
+                currentTokenCount = word.count + 1  // Reset currentTokenCount for the new part
+            }
+        }
+        if !currentChunkTokens.isEmpty {
+            totalParts += 1
+        }
+        currentTokenCount = 0
+        
+        for word in words {
+            let newTokenCount = currentTokenCount + word.count + 1  // Adding 1 for the space
+            if newTokenCount <= tokenLimit {
+                currentChunkTokens.append(word)
+                currentTokenCount = newTokenCount
+            } else {
+                // Save the current chunk and start a new one
+                let chunk = "[START PART \(partIndex + 1)/\(totalParts)] " +
+                currentChunkTokens.joined(separator: " ") +
+                " [END PART \(partIndex + 1)/\(totalParts)]. " +
+                "Do not answer yet, just acknowledge receipt of this chunk with the message \"Part \(partIndex + 1)/\(totalParts) received\" and wait for the next part."
+                chunks.append(chunk)
+                currentChunkTokens = [word]
+                currentTokenCount = word.count + 1
+                partIndex += 1
+            }
+        }
+        // Don't forget the last chunk
+        if !currentChunkTokens.isEmpty {
+            let chunk = "[START PART \(partIndex + 1)/\(totalParts)] " +
+            currentChunkTokens.joined(separator: " ") +
+            " ALL PARTS SENT. Now you can continue processing the request."
+            chunks.append(chunk)
+        }
     }
     
     func fillSampleTranscript() async {
@@ -370,6 +421,7 @@ In nulla posuere sollicitudin aliquam. Quis blandit turpis cursus in hac. Vestib
 
 Lorem sed risus ultricies tristique nulla aliquet. Proin fermentum leo vel orci. Scelerisque fermentum dui faucibus in ornare quam viverra orci sagittis. Dui accumsan sit amet nulla facilisi morbi tempus iaculis urna. Nisi lacus sed viverra tellus in hac. Amet commodo nulla facilisi nullam vehicula ipsum a. Feugiat scelerisque varius morbi enim. Viverra ipsum nunc aliquet bibendum. Erat nam at lectus urna duis. Rhoncus aenean vel elit scelerisque mauris pellentesque. Mauris pharetra et ultrices neque ornare aenean euismod elementum nisi. Libero enim sed faucibus turpis in eu mi. Quisque id diam vel quam elementum pulvinar etiam. Donec adipiscing tristique risus nec feugiat in. Augue ut lectus arcu bibendum at varius vel pharetra. Pellentesque habitant morbi tristique senectus et netus. At quis risus sed vulputate odio ut enim blandit volutpat. Quis ipsum suspendisse ultrices gravida dictum fusce. Accumsan lacus vel facilisis volutpat est velit egestas. Facilisi etiam dignissim diam quis enim lobortis scelerisque.
 """
+        updateChunks()
         isTranscriptViewActive = true
     }
 }

@@ -84,24 +84,24 @@ struct TranscriptView: View {
 //            .navigationTitle("Transcript")
         
         ScrollView {
-            LazyVStack {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 20), count: 5), spacing: 20) {
                 ForEach(0..<whisperState.chunks.count, id: \.self) { index in
-                                        Button(action: {
-                                            // Copy the selected chunk to the clipboard
-                                            self.copyToClipboard(text: whisperState.chunks[index])
-                                        }) {
-                                            Text("Part \(index + 1)")
-                                                .padding()
-                                                .background(Color.blue)
-                                                .foregroundColor(.white)
-                                                .cornerRadius(8)
-                                        }
-                                        .padding(.bottom, 10)
-                                    }
-                Text(whisperState.transcript)
-                    .textSelection(.enabled)
-                    .padding()
-                    .navigationTitle("Transcript")
+                    Button(action: {
+                        // Copy the selected chunk to the clipboard
+                        self.copyToClipboard(text: whisperState.chunks[index])
+                    }) {
+                        Text("Part \(index + 1)")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                    }
+                    .padding(.bottom, 10)
+                }
+//                Text(whisperState.transcript)
+//                    .textSelection(.enabled)
+//                    .padding()
+//                    .navigationTitle("Transcript")
             }
         }.navigationTitle("Transcript Chunks")
     }

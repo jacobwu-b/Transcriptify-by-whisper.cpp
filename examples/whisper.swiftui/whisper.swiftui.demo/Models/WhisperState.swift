@@ -200,9 +200,9 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
                 currentTokenCount = newTokenCount
             } else {
                 // Save the current chunk and start a new one
-                let chunk = "[START PART \(partIndex + 1)/\(totalParts)] " +
+                let chunk = "[START PART \(partIndex + 1)/\(totalParts)]\n" +
                 currentChunkTokens.joined(separator: " ") +
-                " [END PART \(partIndex + 1)/\(totalParts)]. " +
+                "\n[END PART \(partIndex + 1)/\(totalParts)]. " +
                 "Do not answer yet, just acknowledge receipt of this chunk with the message \"Part \(partIndex + 1)/\(totalParts) received\" and wait for the next part."
                 chunks.append(chunk)
                 currentChunkTokens = [word]
@@ -214,8 +214,8 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
         if !currentChunkTokens.isEmpty {
             let chunk = "[START PART \(partIndex + 1)/\(totalParts)] " +
             currentChunkTokens.joined(separator: " ") +
-            " [END PART \(partIndex + 1)/\(totalParts)]. " +
-            " ALL PARTS SENT. Now you can continue processing the request."
+            "\n[END PART \(partIndex + 1)/\(totalParts)]. " +
+            "ALL PARTS SENT. Now you can continue processing the request."
             chunks.append(chunk)
         }
     }

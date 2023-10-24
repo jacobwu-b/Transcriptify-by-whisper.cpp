@@ -49,7 +49,7 @@ struct ContentView: View {
                 Spacer()
                 
                 NavigationLink(destination: TranscriptView(whisperState: whisperState),
-                               isActive: Binding(get: { self.cannotTranscribe }, set: { _ in })) {
+                               isActive: $whisperState.isTranscriptViewActive) {
                     Text("View Transcript")
                                 }
             }

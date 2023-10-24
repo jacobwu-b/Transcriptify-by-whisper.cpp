@@ -9,6 +9,7 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
     @Published var transcript = ""
     @Published var canTranscribe = false
     @Published var isRecording = false
+    @Published var isTranscriptViewActive = false
     @Published var selectedModelSize: ModelSize = .base
     
     private var whisperContext: WhisperContext?
@@ -33,6 +34,7 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
         do {
             try loadModel()
             canTranscribe = true
+            isTranscriptViewActive = false
         } catch {
             print(error.localizedDescription)
             messageLog += "\(error.localizedDescription)\n"
@@ -76,6 +78,7 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
             let text = await whisperContext.getTranscription()
             transcript = text
             messageLog += "Transcription completed:\n\(text)\n"
+            isTranscriptViewActive = true
         } catch {
             print(error.localizedDescription)
             messageLog += "Transcription error: \(error.localizedDescription)\n"

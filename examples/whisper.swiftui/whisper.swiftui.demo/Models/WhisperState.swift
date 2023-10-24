@@ -214,6 +214,7 @@ class WhisperState: NSObject, ObservableObject, AVAudioRecorderDelegate {
         if !currentChunkTokens.isEmpty {
             let chunk = "[START PART \(partIndex + 1)/\(totalParts)] " +
             currentChunkTokens.joined(separator: " ") +
+            " [END PART \(partIndex + 1)/\(totalParts)]. " +
             " ALL PARTS SENT. Now you can continue processing the request."
             chunks.append(chunk)
         }

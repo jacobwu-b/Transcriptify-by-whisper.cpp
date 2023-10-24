@@ -37,6 +37,7 @@ examples/arm_neon.h
 examples/whisper.objc/whisper.objc.xcodeproj/xcshareddata
 examples/whisper.objc/whisper.objc.xcodeproj/xcuserdata/
 examples/whisper.objc/whisper.objc.xcodeproj/project.xcworkspace/xcuserdata
+examples/whisper.swiftui/whisper.swiftui.demo/Resources/
 
 extra/bench-gg.txt
 

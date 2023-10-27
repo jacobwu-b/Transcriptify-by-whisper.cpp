@@ -25,29 +25,29 @@ struct ContentView: View {
                                 .pickerStyle(SegmentedPickerStyle())
                 
                 HStack {
-                    Button("Transcribe Sample Audio File", action: {
-                        Task {
-                            await whisperState.transcribeSample()
-                        }
-                    })
-                    .buttonStyle(.bordered)
-                    .padding()
-                    .font(.largeTitle)
-                    .disabled(!whisperState.canTranscribe)
-                    
-                    Spacer()
-                    
-                    Button("Get Sample Transcript", action: {
-                            Task {
-                                await whisperState.fillSampleTranscript()
-                            }
-                        })
-                        .buttonStyle(.bordered)
-                        .padding()
-                        .font(.largeTitle)
-                        .disabled(!whisperState.canTranscribe)
-                
-                    Spacer()
+//                    Button("Transcribe Sample Audio File", action: {
+//                        Task {
+//                            await whisperState.transcribeSample()
+//                        }
+//                    })
+//                    .buttonStyle(.bordered)
+//                    .padding()
+//                    .font(.largeTitle)
+//                    .disabled(!whisperState.canTranscribe)
+//                    
+//                    Spacer()
+//                    
+//                    Button("Get Sample Transcript", action: {
+//                            Task {
+//                                await whisperState.fillSampleTranscript()
+//                            }
+//                        })
+//                        .buttonStyle(.bordered)
+//                        .padding()
+//                        .font(.largeTitle)
+//                        .disabled(!whisperState.canTranscribe)
+//                
+//                    Spacer()
                 
                     Button(whisperState.isRecording ? "Stop recording" : "Start recording", action: {
                         Task {
@@ -98,11 +98,12 @@ struct TranscriptView: View {
                     }
                     .padding(.bottom, 10)
                 }
-//                Text(whisperState.transcript)
-//                    .textSelection(.enabled)
-//                    .padding()
-//                    .navigationTitle("Transcript")
             }
+            
+            Text(whisperState.transcript)
+                .textSelection(.enabled)
+                .padding()
+                .navigationTitle("Transcript")
         }.navigationTitle("Transcript Chunks")
     }
     func copyToClipboard(text: String) {
